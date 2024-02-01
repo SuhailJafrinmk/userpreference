@@ -10,13 +10,15 @@ class loginPage extends StatefulWidget {
   const loginPage({super.key});
 
   @override
-  State<loginPage> createState() => _loginPageState();
+  State<loginPage> createState() => loginPageState();
 }
 
-class _loginPageState extends State<loginPage> {
+class loginPageState extends State<loginPage> {
   final formkey=GlobalKey<FormState>();
   final TextEditingController usernamecontroller=TextEditingController();
   final TextEditingController passwordcontroller=TextEditingController();
+  static const String KEYUSERNAME='USERNAME';
+  static const String KEYPASSWORD='PASSWORD';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,8 +85,11 @@ class _loginPageState extends State<loginPage> {
                       onPressed: ()async{
                         if(formkey.currentState?.validate() ?? false){
                         print('else condition is working');
+                        
                           var sharedpref=await SharedPreferences.getInstance();
                           sharedpref.setBool(splashScreenState.KEYLOGIN, true);
+                          sharedpref.setString(KEYUSERNAME, usernamecontroller.text);
+                          sharedpref.setString(KEYPASSWORD, passwordcontroller.text);
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>homeScreen()));
                         }else{
                           print('form not valid');
