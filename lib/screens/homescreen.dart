@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_preference/screens/loginscreen.dart';
+import 'package:user_preference/screens/splashscreen.dart';
 
 class homeScreen extends StatelessWidget {
   const homeScreen({super.key});
@@ -16,8 +17,8 @@ class homeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 221, 236, 247),
-        title: Text('Home page'),
+        backgroundColor: const Color.fromARGB(255, 221, 236, 247),
+        title: const Text('Home page'),
       ),
       body: FutureBuilder(future: getUserDetails(), builder: ((context, snapshot) {
         if(snapshot.connectionState==ConnectionState.done){
@@ -27,22 +28,25 @@ class homeScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * .8,
                 width: MediaQuery.of(context).size.width * .8999,
                 child: Card(
-                  color: Color.fromARGB(255, 101, 166, 220),
+                  color: const Color.fromARGB(255, 101, 166, 220),
                   elevation: 20,
                   child: Column(
                     children: [
-                      SizedBox(height: 20,),
-                      CircleAvatar(radius: 50,    child: Icon(Icons.supervised_user_circle_outlined),),
-                      Text('Welcome ${snapshot.data}',style: TextStyle(
+                      const SizedBox(height: 20,),
+                      const CircleAvatar(radius: 50,    child: Icon(Icons.supervised_user_circle_outlined,size: 50,),),
+                      Text('Welcome ${snapshot.data}',style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w900,
                       ),),
-                      SizedBox(height: 50,),
-                      // ElevatedButton(onPressed: (){
-                      //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                      //     return loginPage();
-                      //   }));
-                      // }, child: Text('Signout')),
+                      const SizedBox(height: 50,),
+                      ElevatedButton(onPressed: ()async{
+                        var sharedpref=await SharedPreferences.getInstance();
+                        sharedpref.setBool(splashScreenState.KEYLOGIN, false);
+                  
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                          return const loginPage();
+                        }));
+                      }, child: const Text('Signout')),
                     ],
                   ),
                 ),
@@ -50,12 +54,12 @@ class homeScreen extends StatelessWidget {
               ),
             );
           }else{
-            return Center(
+            return const Center(
               child: Text('no user data available'),
             );
           }
         }else{
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

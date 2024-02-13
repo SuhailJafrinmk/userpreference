@@ -32,7 +32,7 @@ class splashScreenState extends State<splashScreen> {
           ])
         ),
         child:  Center(
-          child: Text('Flutter App',
+          child: Text('SharedPreferences',
           style: GoogleFonts.bebasNeue(
             fontSize: 50,
             fontWeight: FontWeight.w900,
@@ -60,16 +60,17 @@ class splashScreenState extends State<splashScreen> {
 
     var sharedpref=await SharedPreferences.getInstance();
     var isLoggedin=sharedpref.getBool(KEYLOGIN);
+    print('in splash screen value of keylogin is ${sharedpref.getBool(KEYLOGIN)}');
 
-   Timer(Duration(seconds: 3), () {
+   Timer(const Duration(seconds: 3), () {
       if(isLoggedin!=null){
         if(isLoggedin){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>homeScreen()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const homeScreen()));
         }else{
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>loginPage()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const loginPage()));
         }
       }else{
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>loginPage()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const loginPage()));
       }
      });
   }
